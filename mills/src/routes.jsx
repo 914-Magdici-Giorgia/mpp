@@ -3,16 +3,27 @@ import {
     createBrowserRouter,
 
 } from "react-router-dom";
-import Home from "./pages/Home";
-import About from "./pages/About";
+
+import MillsList from "./pages/MillsList";
+import MillDetails from "./pages/MillDetails";
+import AddMillForm from "./pages/AddMillForm";
+import Chart from "./pages/Chart";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <Home/>,
+        element: <MillsList/>,
     },
     {
-        path:"/:id",
-        element:<About/>,
-    }
+        path:"/mill/:id",
+        element:<MillDetails/>,
+    },
+    {
+        path: "/add-mill",
+        element: <AddMillForm />,
+    },
+    {
+        path: "/chart",
+        element: <Chart />,
+    },
     ])

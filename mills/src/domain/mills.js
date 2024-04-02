@@ -1,4 +1,4 @@
-export const mills=[{
+ const mills=[{
     id:1,
         name:"Alcock's Mill",
         place:"Forthampton",
@@ -60,4 +60,5 @@ export const mills=[{
         year: "1793",
         type:"Smock",
     }
-    ]
+    ];
+ export default mills;

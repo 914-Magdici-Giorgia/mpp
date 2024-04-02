@@ -7,10 +7,15 @@ import {
 import "./index.scss";
 
 import {router} from "./routes"
+import {MillProvider} from "./components/MillContext";
 
-const App = () => (
-    <RouterProvider router={router}/>
 
-);
+const App = () => {
+    return (
+        <MillProvider>
+            <RouterProvider router={router} />
+        </MillProvider>
+    );
+};
 
 ReactDOM.render(<App/>,document.getElementById("app"));
