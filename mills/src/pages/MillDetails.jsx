@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useMillContext } from "../components/MillContext";
+import { useParams, useNavigate } from "react-router-dom";
+import { useMillContext } from "../contexts/millsContext";
+
 
 const MillDetails = () => {
     const { id } = useParams();
-    const { mills, updateMill } = useMillContext();
+    const { mills, update } = useMillContext();
     const [editableMill, setEditableMill] = useState(null);
-
+    const navigate = useNavigate();
     useEffect(() => {
         // Find the mill by ID from the context mills array
         const foundMill = mills.find((mill) => mill.id === parseInt(id));
@@ -24,7 +25,9 @@ const MillDetails = () => {
 
     const saveChanges = () => {
         // Update the mill in the context with the new data
-        updateMill(editableMill);
+        console.log(editableMill);
+        update(editableMill.id,editableMill);
+        navigate("/");
     };
 
     if (!editableMill) {

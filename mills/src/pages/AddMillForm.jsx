@@ -1,8 +1,7 @@
 // AddMillForm.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {useMillContext} from "../components/MillContext";
-
+import { useMillContext } from "../contexts/millsContext";
 const AddMillForm = () => {
     const [millData, setMillData] = useState({
         name: "",
@@ -12,7 +11,7 @@ const AddMillForm = () => {
     });
 
     const navigate = useNavigate();
-    const { addMill } = useMillContext();
+    const { create } = useMillContext();
     const handleChange = (e) => {
         const { name, value } = e.target;
         setMillData({ ...millData, [name]: value });
@@ -22,7 +21,7 @@ const AddMillForm = () => {
         e.preventDefault();
         // Add logic to save the mill data (e.g., send it to an API)
         console.log("Submitted mill data:", millData);
-        addMill(millData);
+        create(millData);
         // Redirect the user back to the main page after submitting the form
         navigate("/");
     };

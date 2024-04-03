@@ -1,54 +1,60 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import MillCard from "../components/MillCard";
 import {Link} from "react-router-dom";
 import Button from "../components/Button";
-import {useMillContext} from "../components/MillContext";
+import { useMillContext } from "../contexts/millsContext";
+
 
 
 const MillsList = () => {
-    const { mills,sortMillsByYear } = useMillContext();
-    const millsPerPage = 5;// Get the mills array from the context
-    const [currentPage, setCurrentPage] = useState(1);
-    const indexOfLastMill = currentPage * millsPerPage;
-    const indexOfFirstMill = indexOfLastMill - millsPerPage;
-    const currentMills = mills.slice(indexOfFirstMill, indexOfLastMill);
-    const handlePageChange = (page) => {
-        setCurrentPage(page);
-    };
-    return (
-        <div>
-            <Link to="/add-mill">
-                <Button>Add Mill</Button>
-            </Link>
-            <div>
-                <Button onClick={sortMillsByYear}>Sort by Year</Button> {/* Use the Button component for sorting */}
+    const {mills, loading} = useMillContext();
+    const [searchTerm, setSearchTerm] = useState("");
+    const [filteredMills, setFilteredMills] = useState([]);
 
+    useEffect(() => {
+        setFilteredMills(mills);
+    }, [mills]);
+    
+    const handleSearch = (e) => {
+        setSearchTerm(e.target.value);
+        const filteredMills = mills.filter((mill) =>
+            mill.name.toLowerCase().includes(e.target.value.toLowerCase())
+        );
+        setFilteredMills(filteredMills);
+    };
+
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center h-screen">
+                <div className="text-4xl">Loading...</div>
             </div>
+        );
+    }
+
+    
+    return (
+        <div className="container mx-auto mt-8">
+            <div className="flex justify-between items-center mb-4">
+                <h1 className="text-2xl font-bold">Mills List</h1>
+                <Link to="/add-mill">
+                    <Button>Add Mill</Button>
+                </Link>
+            </div>
+            <input
+                type="text"
+                placeholder="Search mills..."
+                value={searchTerm}
+                onChange={handleSearch}
+                className="border border-gray-300 rounded-md p-2 w-full mb-4"
+            />
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {currentMills.map((mill) => (
+                {Array.isArray(filteredMills) && filteredMills.map((mill) => (
                     <MillCard key={mill.id} mill={mill} />
                 ))}
             </div>
-            <div className="flex justify-center mt-4">
-                {/* Previous Button */}
-                <button
-                    className="mx-2 px-4 py-2 bg-blue-500 text-white rounded-md"
-                    onClick={() => handlePageChange(currentPage - 1)}
-                    disabled={currentPage === 1}
-                >
-                    Previous
-                </button>
-                {/* Next Button */}
-                <button
-                    className="mx-2 px-4 py-2 bg-blue-500 text-white rounded-md"
-                    onClick={() => handlePageChange(currentPage + 1)}
-                    disabled={indexOfLastMill >= mills.length}
-                >
-                    Next
-                </button>
-            </div>
         </div>
     );
-};
+}
+    
 
 export default MillsList;

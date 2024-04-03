@@ -7,7 +7,7 @@ import {
 import "./index.scss";
 
 import {router} from "./routes"
-import {MillProvider} from "./components/MillContext";
+import {MillProvider} from "./contexts/millsContext";
 
 
 const App = () => {
@@ -18,4 +18,4 @@ const App = () => {
     );
 };
 
-ReactDOM.render(<App/>,document.getElementById("app"));
+ReactDOM.render(<App/>,document.getElementById("root"));
