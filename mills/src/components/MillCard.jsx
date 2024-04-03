@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {useMillContext} from "./MillContext";
+import { useMillContext } from "../contexts/millsContext";
 import Button from "./Button";
 
 const MillCard = ({ mill }) => {

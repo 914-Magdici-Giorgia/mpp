@@ -1,7 +1,7 @@
 // MillChart.jsx
 import React, { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
-import {useMillContext} from "../components/MillContext";
+import { useMillContext } from "../contexts/millsContext";
 
 const MillChart = () => {
     const { mills } = useMillContext();
